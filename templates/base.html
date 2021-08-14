@@ -1,0 +1,19 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+  <title>Pikksaar's app | {% block title %}{% endblock %}</title>
+
+  {{ super() }}
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" media="all">
+{% endblock %}
+
+{% block navbar %}
+  {% include "navbar.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% block page_content %}{% endblock %}
+  </div>
+{% endblock %}

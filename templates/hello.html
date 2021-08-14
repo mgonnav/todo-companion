@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block page_content %}
+  {% if username and user_ip %}
+    <h1>Hello, {{ username }}!</h1>
+    <h3>Hello World in Flask! Your IP is {{ user_ip }}</h3>
+
+    <table>
+      <tr>
+        <th>To-dos</th>
+      </tr>
+      {% for todo in todos %}
+        {{ macros.render_todo(todo) }}
+      {% endfor %}
+    </table>
+  {% else %}
+    {{ wtf.quick_form(login_form, form_type="horizontal", button_map={'submit': 'primary'}) }}
+  {% endif %}
+
+{% endblock %}

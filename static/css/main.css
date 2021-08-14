@@ -1,0 +1,12 @@
+body {
+  font-family: sans-serif;
+}
+
+img {
+  max-width: 50px;
+}
+
+.form-control {
+  min-width: 280px;
+  max-width: 30%;
+}
