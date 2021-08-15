@@ -45,27 +45,38 @@ def index():
     return response
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.is_submitted():
+        if form.validate():
+            username = form.username.data
+            if username in names:
+                flash('Username is already registered', category='danger')
+            else:
+                session['username'] = username
+                names.append(username)
+
+                flash('Username registered successfully', category='success')
+                return redirect(url_for('index'))
+        else:
+            flash('Invalid form data', category='danger')
+
+    return render_template('login.html', form=form)
+
+
 @app.route('/hello', methods=['GET', 'POST'])
 def hello_world():
-    login_form = LoginForm()
-    if login_form.validate_on_submit():
-        username = login_form.username.data
-        if username in names:
-            flash('Username is already registered', category='danger')
-        else:
-            session['username'] = username
-            names.append(username)
-            flash('Username registered successfully', category='success')
-
-        return redirect(url_for('index'))
-
     user_ip = session.get('user_ip')
     username = session.get('username')
+
+    if not user_ip or not username:
+        return redirect(url_for('login'))
+
     context = {
         'user_ip': user_ip,
         'username': username,
         'todos': todos,
-        'login_form': login_form
     }
 
     return render_template('hello.html', **context)
