@@ -7,7 +7,7 @@ from wtforms.fields import PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 from flask import (Flask, make_response, redirect, render_template, request,
-                   session, url_for)
+                   session, url_for, flash)
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -16,6 +16,7 @@ load_dotenv()
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
 todos = ['Buy coffee', 'Read', 'Study online']
+names = []
 
 
 class LoginForm(FlaskForm):
@@ -49,7 +50,12 @@ def hello_world():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         username = login_form.username.data
-        session['username'] = username
+        if username in names:
+            flash('Username is already registered', category='danger')
+        else:
+            session['username'] = username
+            names.append(username)
+            flash('Username registered successfully', category='success')
 
         return redirect(url_for('index'))
 

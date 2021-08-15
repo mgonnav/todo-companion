@@ -8,12 +8,23 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" media="all">
 {% endblock %}
 
-{% block navbar %}
-  {% include "navbar.html" %}
-{% endblock %}
-
-{% block content %}
+{% block body %}
   <div class="container">
-    {% block page_content %}{% endblock %}
+    {% block navbar %}
+      {% include "navbar.html" %}
+    {% endblock %}
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="alert alert-{{ category }} alert-dismissible">
+        {{ message }}
+        <button class="close" type="button" data-dismiss="alert">&times;</button>
+      </div>
+    {% endfor %}
+    
+    {% block content %}{% endblock %}
+
+    {% block scripts %}
+      {{ super() }}
+    {% endblock %}
   </div>
 {% endblock %}
