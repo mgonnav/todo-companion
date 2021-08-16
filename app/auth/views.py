@@ -58,7 +58,7 @@ def signup():
             user_data = UserData(username, password_hash)
             user_put(user_data)
 
-            flash('Registration successful. You can login now.',
+            flash('Registration successful. You can log in now.',
                   category='success')
             return redirect(url_for('auth.login'))
         else:
