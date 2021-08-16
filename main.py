@@ -5,10 +5,9 @@ from flask import (flash, make_response, redirect, render_template, request,
 
 from app import create_app
 from app.forms import LoginForm
+from app.firestore_service import get_users, get_todos
 
 app = create_app()
-
-todos = ['Buy coffee', 'Read', 'Study online']
 
 
 @app.cli.command()
@@ -48,7 +47,7 @@ def hello():
     context = {
         'user_ip': user_ip,
         'username': username,
-        'todos': todos,
+        'todos': get_todos(user_id=username),
     }
 
     return render_template('hello.html', **context)
