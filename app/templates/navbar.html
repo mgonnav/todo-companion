@@ -21,6 +21,10 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('index') }}">Go to index</a></li>
                 <li><a href="https://mgonnav.com" target="_blank">mgonnav</a></li>
+
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

@@ -8,6 +8,8 @@ class MainTest(TestCase):
     def create_app(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
+        app.config['USERNAME'] = 'mateo'
+        app.config['PASSWORD'] = 'password'
         return app
 
     def test_app_exists(self):
@@ -20,12 +22,15 @@ class MainTest(TestCase):
         self.assertFalse(current_app.config['WTF_CSRF_ENABLED'])
 
     def test_index_redirects(self):
-        response = self.client.get(url_for('index'))
-        self.assertRedirects(response, url_for('hello'))
+        test_user = {
+            'username': current_app.config['USERNAME'],
+            'password': current_app.config['PASSWORD']
+        }
+        self.client.post(url_for('auth.login'), data=test_user)
 
-    def test_hello_get_not_logged(self):
-        response = self.client.get(url_for('hello'))
-        self.assertRedirects(response, url_for('auth.login'))
+        response = self.client.get(url_for('index'))
+
+        self.assertRedirects(response, url_for('hello'))
 
     def test_auth_blueprint_exists(self):
         self.assertIn('auth', self.app.blueprints)
@@ -38,33 +43,26 @@ class MainTest(TestCase):
         self.client.get(url_for('auth.login'))
         self.assertTemplateUsed('login.html')
 
-    def test_login_post_new(self):
-        import uuid
-        fake_form = {
-            'username': uuid.uuid4().hex[:8],
-            'password': uuid.uuid4().hex[:8]
+    def test_login_logout(self):
+        user = {
+            'username': current_app.config['USERNAME'],
+            'password': current_app.config['PASSWORD']
         }
-        response = self.client.post(url_for('auth.login'), data=fake_form)
 
+        response = self.client.post(url_for('auth.login'), data=user)
         self.assertRedirects(response, url_for('index'))
-        self.assertMessageFlashed('Username registered successfully',
-                                  'success')
 
-    def test_login_post_already_registered(self):
-        import uuid
-        fake_form = {
-            'username': uuid.uuid4().hex[:6],
-            'password': uuid.uuid4().hex[:6]
+        response = self.client.get(url_for('auth.logout'))
+        self.assertRedirects(response, url_for('auth.login'))
+        self.assertMessageFlashed('Come back soon!', category='success')
+
+    def test_login_post_unregistered_user(self):
+        unregistered_user = {
+            'username': 'unregistered',
+            'password': 'unregistered_pass'
         }
-        self.client.post(url_for('auth.login'), data=fake_form)
-        response = self.client.post(url_for('auth.login'), data=fake_form)
+        response = self.client.post(url_for('auth.login'),
+                                    data=unregistered_user)
 
         self.assertRedirects(response, url_for('auth.login'))
-        self.assertMessageFlashed('Username is already registered', 'danger')
-
-    def test_login_post_invalid_form(self):
-        invalid_form = {'username': '', 'password': ''}
-        response = self.client.post(url_for('auth.login'), data=invalid_form)
-
-        self.assertRedirects(response, url_for('auth.login'))
-        self.assertMessageFlashed('Invalid form data', 'danger')
+        self.assertMessageFlashed('Invalid credentials.', category='danger')
