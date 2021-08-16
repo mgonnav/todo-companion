@@ -25,11 +25,18 @@ class MainTest(TestCase):
 
     def test_hello_get_not_logged(self):
         response = self.client.get(url_for('hello'))
-        self.assertRedirects(response, url_for('login'))
+        self.assertRedirects(response, url_for('auth.login'))
+
+    def test_auth_blueprint_exists(self):
+        self.assertIn('auth', self.app.blueprints)
 
     def test_login_get(self):
-        response = self.client.get(url_for('login'))
+        response = self.client.get(url_for('auth.login'))
         self.assert200(response)
+
+    def test_login_template(self):
+        self.client.get(url_for('auth.login'))
+        self.assertTemplateUsed('login.html')
 
     def test_login_post_new(self):
         import uuid
@@ -37,7 +44,7 @@ class MainTest(TestCase):
             'username': uuid.uuid4().hex[:8],
             'password': uuid.uuid4().hex[:8]
         }
-        response = self.client.post(url_for('login'), data=fake_form)
+        response = self.client.post(url_for('auth.login'), data=fake_form)
 
         self.assertRedirects(response, url_for('index'))
         self.assertMessageFlashed('Username registered successfully',
@@ -49,15 +56,15 @@ class MainTest(TestCase):
             'username': uuid.uuid4().hex[:6],
             'password': uuid.uuid4().hex[:6]
         }
-        self.client.post(url_for('login'), data=fake_form)
-        response = self.client.post(url_for('login'), data=fake_form)
+        self.client.post(url_for('auth.login'), data=fake_form)
+        response = self.client.post(url_for('auth.login'), data=fake_form)
 
-        self.assertRedirects(response, url_for('login'))
+        self.assertRedirects(response, url_for('auth.login'))
         self.assertMessageFlashed('Username is already registered', 'danger')
 
     def test_login_post_invalid_form(self):
         invalid_form = {'username': '', 'password': ''}
-        response = self.client.post(url_for('login'), data=invalid_form)
+        response = self.client.post(url_for('auth.login'), data=invalid_form)
 
-        self.assertRedirects(response, url_for('login'))
+        self.assertRedirects(response, url_for('auth.login'))
         self.assertMessageFlashed('Invalid form data', 'danger')
