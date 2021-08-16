@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
+import unittest
 from wtforms.fields import PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
@@ -17,6 +18,12 @@ app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
 todos = ['Buy coffee', 'Read', 'Study online']
 names = []
+
+
+@app.cli.command()
+def test():
+    tests = unittest.TestLoader().discover('tests')
+    unittest.TextTestRunner().run(tests)
 
 
 class LoginForm(FlaskForm):
@@ -53,25 +60,27 @@ def login():
             username = form.username.data
             if username in names:
                 flash('Username is already registered', category='danger')
+                return make_response(redirect('/login'))
             else:
                 session['username'] = username
                 names.append(username)
 
                 flash('Username registered successfully', category='success')
-                return redirect(url_for('index'))
+                return make_response(redirect('/'))
         else:
             flash('Invalid form data', category='danger')
+            return make_response(redirect('/login'))
 
     return render_template('login.html', form=form)
 
 
-@app.route('/hello', methods=['GET', 'POST'])
-def hello_world():
+@app.route('/hello')
+def hello():
     user_ip = session.get('user_ip')
     username = session.get('username')
 
     if not user_ip or not username:
-        return redirect(url_for('login'))
+        return make_response(redirect('/login'))
 
     context = {
         'user_ip': user_ip,
