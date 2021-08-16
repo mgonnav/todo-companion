@@ -1,12 +1,11 @@
 import unittest
 
-from flask import (flash, make_response, redirect, render_template, request,
-                   session)
-from flask_login import login_required, current_user
+from flask import flash, redirect, render_template, request, session, url_for
+from flask_login import current_user, login_required
 
 from app import create_app
-from app.forms import LoginForm
-from app.firestore_service import get_users, get_todos
+from app.firestore_service import get_todos, get_users, put_todo
+from app.forms import LoginForm, TodoForm
 
 app = create_app()
 
@@ -33,24 +32,26 @@ def index():
     user_ip = request.remote_addr
     session['user_ip'] = user_ip
 
-    response = make_response(redirect('/hello'))
-
-    return response
+    return redirect(url_for('hello'))
 
 
-@app.route('/hello')
+@app.route('/hello', methods=['GET', 'POST'])
 @login_required
 def hello():
+    form = TodoForm()
+    if form.validate_on_submit():
+        put_todo(user_id=current_user.id, description=form.description.data)
+        flash('To-do added successfully', category='success')
+        return redirect(url_for('hello'))
+
     user_ip = session.get('user_ip')
     username = current_user.id
-
-    if not user_ip or not username:
-        return make_response(redirect('/auth/login'))
 
     context = {
         'user_ip': user_ip,
         'username': username,
         'todos': get_todos(user_id=username),
+        'todo_form': form
     }
 
     return render_template('hello.html', **context)

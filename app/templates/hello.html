@@ -7,20 +7,17 @@ Home
 {% endblock %}
 
 {% block content %}
-  {% if username and user_ip %}
-    <h1>Hello, {{ username }}!</h1>
-    <h3>Hello World in Flask! Your IP is {{ user_ip }}</h3>
+  <h1>Hello, {{ username }}!</h1>
+  <h3>Hello World in Flask! Your IP is {{ user_ip }}</h3>
 
-    <table>
-      <tr>
-        <th>To-dos</th>
-      </tr>
-      {% for todo in todos %}
-        {{ macros.render_todo(todo) }}
-      {% endfor %}
-    </table>
-  {% else %}
-    {{ wtf.quick_form(login_form, form_type="horizontal", button_map={'submit': 'primary'}) }}
-  {% endif %}
+  {{ wtf.quick_form(todo_form, form_type='inline', button_map={'submit': 'primary'}) }}
 
+  <table>
+    <tr>
+      <th>To-dos</th>
+    </tr>
+    {% for todo in todos %}
+      {{ macros.render_todo(todo) }}
+    {% endfor %}
+  </table>
 {% endblock %}

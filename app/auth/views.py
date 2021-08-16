@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, url_for
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from app.firestore_service import get_user, user_put
+from app.firestore_service import get_user, put_user
 from app.forms import LoginForm, SignUpForm
 from app.models import UserData, UserModel
 
@@ -56,7 +56,7 @@ def signup():
         if user_document.to_dict() is None:
             password_hash = generate_password_hash(password)
             user_data = UserData(username, password_hash)
-            user_put(user_data)
+            put_user(user_data)
 
             flash('Registration successful. You can log in now.',
                   category='success')
