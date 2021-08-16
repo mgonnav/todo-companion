@@ -19,11 +19,14 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('index') }}">Go to index</a></li>
-                <li><a href="https://mgonnav.com" target="_blank">mgonnav</a></li>
 
                 {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                  <li><a href="{{ url_for('index') }}">Go to index</a></li>
+                  <li><a href="https://mgonnav.com" target="_blank">mgonnav</a></li>
+                  <li><a href="{{ url_for('auth.logout') }}">Log out</a></li>
+                {% else %}
+                  <li><a href="{{ url_for('auth.login') }}">Log in</a></li>
+                  <li><a href="{{ url_for('auth.signup') }}">Sign up</a></li>
                 {% endif %}
             </ul>
         </div>
