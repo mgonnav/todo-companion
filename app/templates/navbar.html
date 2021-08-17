@@ -4,6 +4,9 @@
       <img class="d-inline-block align-top" src="{{ url_for('static', filename='images/sharingan.png') }}" alt="Sasuke's Mangekyou Sharingan" width="30" height="30">
       To-do Companion
     </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       {% if current_user.is_authenticated %}

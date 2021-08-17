@@ -11,11 +11,13 @@
       {{ bootstrap.load_css() }}
 
       <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" media="all">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     {% endblock %}
   {% endblock %}
 </head>
 <body>
-  <div class="container">
+  <div class="container-lg h-100">
     {% block navbar %}
       {% include "navbar.html" %}
     {% endblock %}
