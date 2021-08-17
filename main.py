@@ -33,17 +33,17 @@ def index():
     user_ip = request.remote_addr
     session['user_ip'] = user_ip
 
-    return redirect(url_for('hello'))
+    return redirect(url_for('home'))
 
 
-@app.route('/hello', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 @login_required
-def hello():
+def home():
     form = TodoForm()
     if form.validate_on_submit():
         put_todo(user_id=current_user.id, description=form.description.data)
         flash('To-do added successfully', category='success')
-        return redirect(url_for('hello'))
+        return redirect(url_for('home'))
 
     user_ip = session.get('user_ip')
     username = current_user.id
@@ -55,7 +55,7 @@ def hello():
         'todo_form': form
     }
 
-    return render_template('hello.html', **context)
+    return render_template('home.html', **context)
 
 
 @app.route('/todos/delete/<todo_id>', methods=['POST'])
@@ -63,7 +63,7 @@ def hello():
 def delete(todo_id):
     user_id = current_user.id
     delete_todo(user_id, todo_id)
-    return redirect(url_for('hello'))
+    return redirect(url_for('home'))
 
 
 @app.route('/todos/update/<todo_id>', methods=['POST'])
@@ -71,4 +71,4 @@ def delete(todo_id):
 def update(todo_id):
     user_id = current_user.id
     update_todo(user_id, todo_id)
-    return redirect(url_for('hello'))
+    return redirect(url_for('home'))
