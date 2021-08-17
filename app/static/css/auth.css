@@ -1,0 +1,50 @@
+body {
+  background-color: #81e8cc;
+}
+
+.user_card {
+  width: 95%;
+  background-color: #fefefe;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 30px 0;
+}
+
+.form_container {
+  margin: 0 10px;
+}
+
+.login_container {
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.login_btn {
+  width: 100%;
+  background-image: linear-gradient(to right, #159875 0%, #1aaf86 50%, #61d4b3 100%);
+  color: #fff !important;
+  font-weight: bold;
+  flex: 1 1 auto;
+  margin: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.login_btn:hover {
+  background-position: right center;
+}
+
+.input-group-text {
+  background-color: #f0b71f;
+  color: #fafafa;
+}
+
+#planning_img_card {
+  background-size: cover;
+}

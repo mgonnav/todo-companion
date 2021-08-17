@@ -1,0 +1,31 @@
+@media screen and (min-width: 0) and (max-width: 374px) {
+  #planning_img_card {
+    width: 233px;
+    height: 133px;
+  }
+}
+@media screen and (min-width: 375px) and (max-width: 424px) {
+  #planning_img_card {
+    width: 326px;
+    height: 186px;
+  }
+}
+@media screen and (min-width: 425px) and (max-width: 767px) {
+  .user_card {
+    width: 405px;
+  }
+  #planning_img_card {
+    width: 372px;
+    height: 212px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 2560px) {
+  .user_card {
+    width: 720px;
+  }
+  .login_container {flex-direction: row;}
+  #planning_img_card {
+    width: 396px;
+    height: 226px;
+  }
+}

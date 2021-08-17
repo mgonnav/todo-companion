@@ -1,0 +1,22 @@
+@media screen and (min-width: 0) and (max-width: 767px) {
+  #planning_img_card {
+    width: 302px;
+    height: 226px;
+    margin-bottom: 10px;
+  }
+}
+@media screen and (min-width: 425px) and (max-width: 767px) {
+  .user_card {
+    width: 405px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 2560px) {
+  .user_card {
+    width: 720px;
+  }
+  .login_container {flex-direction: row;}
+  #planning_img_card {
+    width: 355px;
+    height: 266px;
+  }
+}
