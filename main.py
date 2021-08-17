@@ -4,7 +4,8 @@ from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_required
 
 from app import create_app
-from app.firestore_service import get_todos, get_users, put_todo
+from app.firestore_service import (delete_todo, get_todos, get_users, put_todo,
+                                   update_todo)
 from app.forms import LoginForm, TodoForm
 
 app = create_app()
@@ -55,3 +56,19 @@ def hello():
     }
 
     return render_template('hello.html', **context)
+
+
+@app.route('/todos/delete/<todo_id>', methods=['POST'])
+@login_required
+def delete(todo_id):
+    user_id = current_user.id
+    delete_todo(user_id, todo_id)
+    return redirect(url_for('hello'))
+
+
+@app.route('/todos/update/<todo_id>', methods=['POST'])
+@login_required
+def update(todo_id):
+    user_id = current_user.id
+    update_todo(user_id, todo_id)
+    return redirect(url_for('hello'))
