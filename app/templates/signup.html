@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% import "macros.html" as macros %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% from "bootstrap/form.html" import render_form %}
 
 {% block title %}
 Sign up
@@ -8,5 +8,5 @@ Sign up
 
 {% block content %}
   <h1>Register a new account</h1>
-  {{ wtf.quick_form(form, form_type="horizontal", button_map={'submit': 'primary'}) }}
+  {{ render_form(form, form_type="horizontal", button_map={'submit': 'primary'}) }}
 {% endblock %}

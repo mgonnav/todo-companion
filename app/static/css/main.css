@@ -10,3 +10,7 @@ img {
   min-width: 280px;
   max-width: 30%;
 }
+
+.clickable {
+  cursor: pointer;
+}

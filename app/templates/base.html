@@ -1,19 +1,25 @@
-{% extends "bootstrap/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pikksaar's app | {% block title %}{% endblock %}</title>
 
-{% block head %}
-  <title>Pikksaar's app | {% block title %}{% endblock %}</title>
+    {% block styles %}
+      <!-- Bootstrap CSS -->
+      {{ bootstrap.load_css() }}
 
-  {{ super() }}
-
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" media="all">
-{% endblock %}
-
-{% block body %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" media="all">
+    {% endblock %}
+  {% endblock %}
+</head>
+<body>
   <div class="container">
     {% block navbar %}
       {% include "navbar.html" %}
     {% endblock %}
-
+  
     {% for category, message in get_flashed_messages(with_categories=true) %}
       <div class="alert alert-{{ category }} alert-dismissible">
         {{ message }}
@@ -22,9 +28,10 @@
     {% endfor %}
     
     {% block content %}{% endblock %}
-
+  
     {% block scripts %}
-      {{ super() }}
+      {{ bootstrap.load_js() }}
     {% endblock %}
   </div>
-{% endblock %}
+</body>
+</html>
