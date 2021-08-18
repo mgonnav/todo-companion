@@ -1,0 +1,39 @@
+#hero {
+
+}
+
+.table .thead-dark th {
+  background-color: #159875;
+  border-color: #1aaf86;
+}
+
+.checkbox_logo {
+  color: #159875;
+  font-size: 1.5em;
+  margin: 0;
+  margin-right: 0.5em;
+}
+
+.button_delete {
+  color: #dc3545;
+  font-size: 1.35em;
+  border-style: none;
+  background-color: transparent;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.main_table_delete_btn {
+  justify-self: end;
+  padding-right: 0.5em;
+}
+
+.todo_table_item {
+  background-color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  #todo_table_container {
+    width: 720px;
+  }
+}

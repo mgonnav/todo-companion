@@ -14,7 +14,7 @@
   .user_card {
     width: 720px;
   }
-  .login_container {flex-direction: row;}
+  .signup_container {flex-direction: row;}
   #planning_img_card {
     width: 355px;
     height: 266px;

@@ -14,13 +14,16 @@ body {
 
 .form_container {
   margin: 0 10px;
+  text-align: center;
 }
 
+.signup_container,
 .login_container {
   flex-direction: column;
   padding: 0 1rem;
 }
 
+.signup_btn,
 .login_btn {
   width: 100%;
   background-image: linear-gradient(to right, #159875 0%, #1aaf86 50%, #61d4b3 100%);
@@ -36,6 +39,7 @@ body {
   border-radius: 10px;
 }
 
+.signup_btn:hover,
 .login_btn:hover {
   background-position: right center;
 }

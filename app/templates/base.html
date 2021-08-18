@@ -18,11 +18,11 @@
   {% endblock %}
 </head>
 <body>
-  <div class="container-lg h-100">
-    {% block navbar %}
-      {% include "navbar.html" %}
-    {% endblock %}
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock %}
   
+  <div class="container h-100">
     {% for category, message in get_flashed_messages(with_categories=true) %}
       <div class="alert alert-{{ category }} alert-dismissible">
         {{ message }}

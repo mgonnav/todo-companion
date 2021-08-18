@@ -1,32 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="">
-      <img class="d-inline-block align-top" src="{{ url_for('static', filename='images/sharingan.png') }}" alt="Sasuke's Mangekyou Sharingan" width="30" height="30">
-      To-do Companion
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      {% if current_user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('index') }}">Go to index</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://mgonnav.com" target="_blank">mgonnav</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.logout') }}">Log out</a>
-        </li>
-      {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.login') }}">Log in</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.signup') }}">Sign up</a>
-        </li>
-      {% endif %}
-    </div>
+<div id="nav_area">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="">
+          <img class="d-inline-block align-top" src="{{ url_for('static', filename='images/sharingan.png') }}" alt="Sasuke's Mangekyou Sharingan" width="30" height="30">
+          To-do Companion
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          {% if current_user.is_authenticated %}
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index') }}">Go to index</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://mgonnav.com" target="_blank">mgonnav</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.logout') }}">Log out</a>
+            </li>
+          </ul>
+          {% else %}
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Log in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.signup') }}">Sign up</a>
+            </li>
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
   </div>
-</nav>
+</div>

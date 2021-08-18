@@ -4,6 +4,7 @@ body {
   padding: 0;
   height: 100%;
   font-family: 'Open Sans', sans-serif;
+  background-color: #81e8cc;
 }
 
 img {
@@ -14,6 +15,7 @@ img {
   cursor: pointer;
 }
 
+#nav_area,
 .navbar {
   background-color: #148c6c !important;
 }

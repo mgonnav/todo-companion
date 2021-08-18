@@ -1,21 +1,22 @@
 {% macro render_todo(todo) %}
 <tr>
-  <td>
-    {{ todo.to_dict()['description'] }}
-    <form style="display:none;" class="form form-inline" style="display:inline;" action="{{ url_for('update', todo_id=todo.id)}}" method="POST">
-      <button type="submit" id="update_todo_{{ todo.id }}"></button>
-    </form>
-    {% if todo.to_dict()['done'] %}
-      <label for="update_todo_{{ todo.id }}" class="badge badge-info clickable">Done</label>
-    {% else %}
-      <label for="update_todo_{{ todo.id }}" class="badge badge-warning clickable">To-do</label>
-    {% endif %}
-  </td>
+  <td class="todo_table_item d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center main_table_data">
+      {% if todo.to_dict()['done'] %}
+        <label for="update_todo_{{ todo.id }}" class="clickable checkbox_logo"><i class="fas fa-check-square"></i></label>
+      {% else %}
+        <label for="update_todo_{{ todo.id }}" class="clickable checkbox_logo"><i class="far fa-check-square"></i></label>
+      {% endif %}
 
-  <td>
-    <form class="form form-inline" action="{{ url_for('delete', todo_id=todo.id) }}" method="POST">
-      <button class="btn btn-danger" type="submit">
-        &times;
+      {{ todo.to_dict()['description'] }}
+      <form style="display:none;" class="form form-inline" style="display:inline;" action="{{ url_for('update', todo_id=todo.id)}}" method="POST">
+        <button type="submit" id="update_todo_{{ todo.id }}"></button>
+      </form>
+    </div>
+
+    <form class="form form-inline main_table_delete_btn" action="{{ url_for('delete', todo_id=todo.id) }}" method="POST">
+      <button class="button_delete" type="submit">
+        <i class="fas fa-times"></i>
       </button>
     </form>
   </td>
