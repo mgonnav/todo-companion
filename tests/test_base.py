@@ -46,16 +46,17 @@ class MainTest(TestCase):
 
     def test_add_update_remove_todo(self):
         new_todo = {'description': 'Test code for flask app'}
+        done_task_icon = b'<i class="fas fa-check-square"></i>'
+        todo_task_icon = b'<i class="far fa-check-square"></i>'
+
         response = self.client.post(url_for('home'),
                                     data=new_todo,
                                     follow_redirects=True)
         self.assertMessageFlashed('To-do added successfully',
                                   category='success')
         self.assertIn(b'Test code for flask app', response.data)
-        self.assertIn(b'class="badge badge-warning clickable">To-do</label>',
-                      response.data)
-        self.assertNotIn(b'class="badge badge-info clickable">Done</label>',
-                         response.data)
+        self.assertIn(todo_task_icon, response.data)
+        self.assertNotIn(done_task_icon, response.data)
 
         test_user_todos = db.collection(
             f"users/{app.config['USERNAME']}/todos")
@@ -63,16 +64,18 @@ class MainTest(TestCase):
 
         response = self.client.post(url_for('update', todo_id=new_todo_id),
                                     follow_redirects=True)
-        self.assertIn(b'class="badge badge-info clickable">Done</label>',
-                      response.data)
-        self.assertNotIn(
-            b'class="badge badge-warning clickable">To-do</label>',
-            response.data)
+        self.assertIn(done_task_icon, response.data)
+        self.assertNotIn(todo_task_icon, response.data)
 
         response = self.client.post(url_for('delete', todo_id=new_todo_id),
                                     follow_redirects=True)
-        self.assertNotIn(
-            b'class="badge badge-warning clickable">To-do</label>',
-            response.data)
-        self.assertNotIn(b'class="badge badge-info clickable">Done</label>',
-                         response.data)
+        self.assertNotIn(todo_task_icon, response.data)
+        self.assertNotIn(done_task_icon, response.data)
+
+    def test_login_redirects_home_when_logged_in(self):
+        response = self.client.get(url_for('auth.login'))
+        self.assertRedirects(response, url_for('home'))
+
+    def test_signup_redirects_home_when_logged_in(self):
+        response = self.client.get(url_for('auth.signup'))
+        self.assertRedirects(response, url_for('home'))

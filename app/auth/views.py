@@ -1,5 +1,5 @@
 from flask import flash, redirect, render_template, url_for
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.firestore_service import get_user, put_user
@@ -11,6 +11,9 @@ from . import auth
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -46,6 +49,9 @@ def logout():
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     form = SignUpForm()
     if form.validate_on_submit():
         username = form.username.data
