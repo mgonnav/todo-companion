@@ -4,8 +4,7 @@ from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import current_user, login_required
 
 from app import create_app
-from app.firestore_service import (delete_todo, get_todos, get_users, put_todo,
-                                   update_todo)
+from app.firestore_service import delete_todo, get_todos, put_todo, update_todo
 from app.forms import LoginForm, TodoForm
 
 app = create_app()
