@@ -19,3 +19,12 @@ img {
 .navbar {
   background-color: #148c6c !important;
 }
+
+.input-group-text {
+  background-color: #f0b71f;
+  color: #fafafa;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+   color: rgba(255,255,255,.75);
+}

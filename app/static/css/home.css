@@ -1,7 +1,3 @@
-#hero {
-
-}
-
 .table .thead-dark th {
   background-color: #159875;
   border-color: #1aaf86;
@@ -32,8 +28,25 @@
   background-color: #fff;
 }
 
+.line_through {
+  text-decoration: line-through;
+}
+
+#add_todo_icon {
+  border-top-left-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+}
+
+#add_todo_button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 @media screen and (min-width: 768px) {
   #todo_table_container {
+    width: 720px;
+  }
+  #add_todo_form {
     width: 720px;
   }
 }

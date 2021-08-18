@@ -4,11 +4,16 @@
     <div class="d-flex align-items-center main_table_data">
       {% if todo.to_dict()['done'] %}
         <label for="update_todo_{{ todo.id }}" class="clickable checkbox_logo"><i class="fas fa-check-square"></i></label>
+        <span class="line_through text-muted">
+          {{ todo.to_dict()['description'] }}
+        </span>
       {% else %}
         <label for="update_todo_{{ todo.id }}" class="clickable checkbox_logo"><i class="far fa-check-square"></i></label>
+        <span>
+          {{ todo.to_dict()['description'] }}
+        </span>
       {% endif %}
 
-      {{ todo.to_dict()['description'] }}
       <form style="display:none;" class="form form-inline" style="display:inline;" action="{{ url_for('update', todo_id=todo.id)}}" method="POST">
         <button type="submit" id="update_todo_{{ todo.id }}"></button>
       </form>
