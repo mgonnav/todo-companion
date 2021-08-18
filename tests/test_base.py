@@ -17,10 +17,12 @@ class MainTest(TestCase):
 
     def setUp(self):
         test_user = {
-            'username': app.config['USERNAME'], 
+            'username': app.config['USERNAME'],
             'password': app.config['PASSWORD']
         }
-        self.client.post(url_for('auth.login'), data=test_user, follow_redirects=True)
+        self.client.post(url_for('auth.login'),
+                         data=test_user,
+                         follow_redirects=True)
 
     def tearDown(self):
         self.client.get(url_for('auth.logout'), follow_redirects=True)
@@ -43,22 +45,34 @@ class MainTest(TestCase):
         self.assertTemplateUsed('home.html')
 
     def test_add_update_remove_todo(self):
-        new_todo = {
-            'description': 'Test code for flask app'
-        }
-        response = self.client.post(url_for('home'), data=new_todo, follow_redirects=True)
-        self.assertMessageFlashed('To-do added successfully', category='success')
+        new_todo = {'description': 'Test code for flask app'}
+        response = self.client.post(url_for('home'),
+                                    data=new_todo,
+                                    follow_redirects=True)
+        self.assertMessageFlashed('To-do added successfully',
+                                  category='success')
         self.assertIn(b'Test code for flask app', response.data)
-        self.assertIn(b'class="badge badge-warning clickable">To-do</label>', response.data)
-        self.assertNotIn(b'class="badge badge-info clickable">Done</label>', response.data)
+        self.assertIn(b'class="badge badge-warning clickable">To-do</label>',
+                      response.data)
+        self.assertNotIn(b'class="badge badge-info clickable">Done</label>',
+                         response.data)
 
-        test_user_todos = db.collection(f"users/{app.config['USERNAME']}/todos")
+        test_user_todos = db.collection(
+            f"users/{app.config['USERNAME']}/todos")
         new_todo_id = test_user_todos.get()[0].id
 
-        response = self.client.post(url_for('update', todo_id=new_todo_id), follow_redirects=True)
-        self.assertIn(b'class="badge badge-info clickable">Done</label>', response.data)
-        self.assertNotIn(b'class="badge badge-warning clickable">To-do</label>', response.data)
+        response = self.client.post(url_for('update', todo_id=new_todo_id),
+                                    follow_redirects=True)
+        self.assertIn(b'class="badge badge-info clickable">Done</label>',
+                      response.data)
+        self.assertNotIn(
+            b'class="badge badge-warning clickable">To-do</label>',
+            response.data)
 
-        response = self.client.post(url_for('delete', todo_id=new_todo_id), follow_redirects=True)
-        self.assertNotIn(b'class="badge badge-warning clickable">To-do</label>', response.data)
-        self.assertNotIn(b'class="badge badge-info clickable">Done</label>', response.data)
+        response = self.client.post(url_for('delete', todo_id=new_todo_id),
+                                    follow_redirects=True)
+        self.assertNotIn(
+            b'class="badge badge-warning clickable">To-do</label>',
+            response.data)
+        self.assertNotIn(b'class="badge badge-info clickable">Done</label>',
+                         response.data)
