@@ -1,7 +1,7 @@
 @media screen and (min-width: 0) and (max-width: 767px) {
   #planning_img_card {
-    width: 302px;
-    height: 226px;
+    width: 273px;
+    height: 205px;
     margin-bottom: 10px;
   }
 }
@@ -16,7 +16,7 @@
   }
   .signup_container {flex-direction: row;}
   #planning_img_card {
-    width: 348px;
-    height: 261px;
+    width: 319px;
+    height: 239px;
   }
 }

@@ -1,5 +1,6 @@
 body {
   background-color: #81e8cc;
+  overflow: hidden;
 }
 
 .user_card {

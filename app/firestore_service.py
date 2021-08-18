@@ -21,7 +21,9 @@ def get_user(user_id):
 
 
 def get_todos(user_id):
-    return db.collection('users').document(user_id).collection('todos').get()
+    todos_ref = db.collection('users').document(user_id).collection('todos')
+    query = todos_ref.order_by('done')
+    return query.get()
 
 
 def put_user(user_data):
